@@ -1,24 +1,25 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from PyPDF2 import PdfFileReader, PdfReader
 
 # Create your views here.
 
-def text_extract(filename):
+def text_extract(pdf_file):
     print("Extrated")
     pass
 
-def rotate(filename):
+def rotate(pdf_file):
     print("Rotated")
     pass
 
-def watermark(filename):
+def watermark(pdf_file):
     print("Watermart")
     pass
 
-def details(filename):
-    print("Details")
-    pass
-
+def details(pdf_file):
+    reader = PdfReader(pdf_file) 
+    metadata = reader.metadata     
+    return str(metadata)
 
 def home(request):
     if request.method == "POST":
