@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Handling</title>
+    <link rel="stylesheet" href="{% static "style.css" %}">
 </head>
 <body>
     <nav>
@@ -13,23 +14,25 @@
     </nav>
 
     <div class="container">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" name="pdf_file" required>
-            
-            <label>Select the Mode</label>
-            
-            <select name="mode">
-                <option value="extract">Extract Text</option>
-                <option value="rotate">Rotate</option>
-                <option value="watermark">Apply Watermark</option>
-                <option value="details">Get Details</option>
-                <option value="merge">Merge PDF</option>
-                <option value="encrypt">Encryption</option>
-            </select>
-            
-            <button type="submit">Submit</button>
-        </form>
+        <div class="subcon">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="pdf_file" required>
+                
+                <label>Select the Mode</label>
+                
+                <select name="mode">
+                    <option value="extract">Extract Text</option>
+                    <option value="rotate">Rotate</option>
+                    <option value="watermark">Apply Watermark</option>
+                    <option value="details">Get Details</option>
+                    <option value="merge">Merge PDF</option>
+                    <option value="encrypt">Encryption</option>
+                </select>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>
