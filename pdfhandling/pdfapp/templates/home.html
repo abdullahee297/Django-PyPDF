@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +13,23 @@
     </nav>
 
     <div class="container">
-        <input type="file" id="myfile" name="filename">
-        <label for="PDF Mode">Select the Mode</label>
-        <select name="PDF Mode" id="PDF Mode">
-            <option value="Extract Text">Extract Text</option>
-            <option value="Rotate">Rotate</option>
-            <option value="Apply Watermark">Apply Watermark</option>
-            <option value="Get Details">Get Details</option>
-            <option value="Merge PDF">Merge PDF</option>
-            <option value="Encryption">Encryption</option>
-        </select>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="pdf_file" required>
+            
+            <label>Select the Mode</label>
+            
+            <select name="mode">
+                <option value="extract">Extract Text</option>
+                <option value="rotate">Rotate</option>
+                <option value="watermark">Apply Watermark</option>
+                <option value="details">Get Details</option>
+                <option value="merge">Merge PDF</option>
+                <option value="encrypt">Encryption</option>
+            </select>
+            
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </body>
 </html>
