@@ -1,12 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from PyPDF2 import PdfFileReader, PdfReader
+import PyPDF2
+from PyPDF2 import PdfFileReader, PdfReader, PdfWriter
 
 # Create your views here.
 
 def text_extract(pdf_file):
-    print("Extrated")
-    pass
+    reader = PdfReader(pdf_file)
+
+    text = ""
+
+    for page in reader.pages:
+        extracted = page.extract_text()
+        if extracted:
+            text += extracted + "\n"
+
+    return text if text else "No text found in PDF"
 
 def rotate(pdf_file):
     print("Rotated")
