@@ -21,7 +21,7 @@
                 
                 <label>Select the Mode</label>
                 
-                <select name="mode">
+                <select name="mode" id="modeSelect" onchange="toggleWatermark()">
                     <option value="extract">Extract Text</option>
                     <option value="rotate">Rotate</option>
                     <option value="watermark">Apply Watermark</option>
@@ -30,7 +30,7 @@
                     <option value="encrypt">Encryption</option>
                 </select>
 
-                <div class="watermarkINput">
+                <div id="watermarkInput" style="display:none; margin-top:10px;">
                     <input type="text" name="watermark_text" placeholder="Enter Watermark Text...">
                 </div>
                 
