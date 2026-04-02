@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import PyPDF2
 from PyPDF2 import PdfFileReader, PdfReader, PdfWriter
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
 # Create your views here.
 
@@ -17,13 +19,19 @@ def text_extract(pdf_file):
 
     return text if text else "No text found in PDF"
 
-def rotate(pdf_file):
-    print("Rotated")
-    pass
+def rotate(pdf_file, angle=90):
+    reader = PdfReader(pdf_file)
+    writer = PdfWriter()
 
-from PyPDF2 import PdfReader, PdfWriter
-from reportlab.pdfgen import canvas
-from io import BytesIO
+    for page in reader.pages:
+        page.rotate(angle)
+        writer.add_page(page)
+
+    output_stream = BytesIO()
+    writer.write(output_stream)
+    output_stream.seek(0)
+
+    return output_stream
 
 def watermark(pdf_file, watermark_text):
     reader = PdfReader(pdf_file)
@@ -68,7 +76,11 @@ def home(request):
             result = text_extract(pdf_file)
         
         elif mode == "rotate":
-            result = rotate(pdf_file)
+            output_pdf = rotate(pdf_file, 90) 
+            response = HttpResponse(output_pdf, content_type="application/pdf")
+            response["Content-Disposition"] = 'attachment; filename="rotated.pdf"'
+
+            return response
         
         elif mode == "watermark":
             if not watermark_text:
