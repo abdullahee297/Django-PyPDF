@@ -29,10 +29,26 @@
                     <option value="merge">Merge PDF</option>
                     <option value="encrypt">Encryption</option>
                 </select>
+
+                <div class="watermarkINput">
+                    <input type="text" name="watermark_text" placeholder="Enter Watermark Text...">
+                </div>
                 
                 <button type="submit">Submit</button>
             </form>
         </div>
     </div>
 </body>
+<script>
+function toggleWatermark() {
+    let mode = document.getElementById("modeSelect").value;
+    let box = document.getElementById("watermarkInput");
+
+    if (mode === "watermark") {
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+}
+</script>
 </html>

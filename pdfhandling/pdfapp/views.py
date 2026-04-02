@@ -34,6 +34,7 @@ def home(request):
     if request.method == "POST":
         pdf_file = request.FILES.get("pdf_file")
         mode = request.POST.get("mode")
+        watermark_text = request.POST.get("watermark_text")
 
         if not pdf_file:
             return HttpResponse("NO File Uploaded")
@@ -45,7 +46,7 @@ def home(request):
             result = rotate(pdf_file)
         
         elif mode == "watermark":
-            result = watermark(pdf_file)
+            result = watermark(pdf_file, watermark_text)
         
         elif mode == "details":
             result = details(pdf_file)
