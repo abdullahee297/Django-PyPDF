@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@r0=dd+a4b(jwn()p!1+d)&=8^u)@zs2bm&7#j1c1az57q2vjk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 
 # Application definition
@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'pdfhandling.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'zDujyfdYNibDXBtykuOwoYrCKiuayOZz',
+        'HOST': 'ballast.proxy.rlwy.net',  
+        'PORT': '25207',      
     }
 }
+
 
 
 # Password validation

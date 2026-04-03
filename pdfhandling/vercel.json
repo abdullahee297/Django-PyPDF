@@ -1,19 +1,20 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "pdfhandling/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
+    "version": 2,
+    "builds": [
+      {
+        "src": "pdfhandling/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "pdfhandling/wsgi.application"
-    }
-  ]
-}
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "pdfhandling/wsgi.py"
+      }
+    ]
+  }
