@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import PyPDF2
-from PyPDF2 import PdfFileReader, PdfReader, PdfWriter
+from PyPDF2 import PdfFileReader, PdfReader, PdfWriter, PdfMerger
 from reportlab.pdfgen import canvas
 from io import BytesIO
 
@@ -63,6 +63,19 @@ def details(pdf_file):
     metadata = reader.metadata     
     return str(metadata)
 
+def merge(pdf_file, secondpdf):
+    merger = PdfMerger()
+    merger.append(pdf_file)
+    merger.append(secondpdf)
+
+    output_file = BytesIO()
+    merger.write(output_file)
+    merger.close()
+    output_file.seek(0)
+    return output_file
+
+
+
 def home(request):
     if request.method == "POST":
         pdf_file = request.FILES.get("pdf_file")
@@ -90,11 +103,18 @@ def home(request):
 
             response = HttpResponse(output_pdf, content_type="application/pdf")
             response["Content-Disposition"] = 'attachment; filename="watermarked.pdf"'
-
             return response
 
         elif mode == "details":
             result = details(pdf_file)
+        
+        elif mode == "merge":
+            secondpdf = request.FILES.get("secondpdf")
+
+            merge_pdf = merge(pdf_file, secondpdf)
+            response = HttpResponse(merge_pdf, content_type="application/pdf")
+            response["Content-Disposition"] = 'attachment; filename="merged.pdf"'
+            return response
 
         else:
             result = "Invalid Option"
