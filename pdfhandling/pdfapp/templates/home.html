@@ -20,10 +20,13 @@
                 <input type="file" name="pdf_file" required>
                 
                 <div id="watermarkInput" style="display:none; margin-top:10px;">
-                    <input type="text" name="watermark_text" placeholder="Enter Watermark Text...">
+                    <input type="text" name="watermark_text" placeholder="Enter Watermark Text..." >
                 </div>
                 <div id="secondpdf" style="display:none; margin-top:5px;">
-                    <input type="file" name="secondpdf" required>
+                    <input type="file" name="secondpdf" >
+                </div>
+                <div id="password" style="display:none; margin-top:10px;">
+                    <input type="text" name="password" placeholder="Enter Password..." >
                 </div>
 
                 <label>Select the Mode</label>
@@ -36,19 +39,19 @@
                     <option value="merge">Merge PDF</option>
                     <option value="encrypt">Encryption</option>
                 </select>
-
-                
                 
                 <button type="submit">Submit</button>
             </form>
         </div>
     </div>
 </body>
+
 <script>
 function toggleWatermark() {
     let mode = document.getElementById("modeSelect").value;
     let box = document.getElementById("watermarkInput");
     let pdf2 = document.getElementById("secondpdf");
+    let pass = document.getElementById("password");
     
 
     if (mode === "watermark") {
@@ -62,6 +65,13 @@ function toggleWatermark() {
     } else {
         pdf2.style.display = "none";
     }
+
+    if (mode === "encrypt") {
+        pass.style.display = "block";
+    } else {
+        pass.style.display = "none";
+    }
 }
 </script>
+
 </html>

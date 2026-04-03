@@ -24,7 +24,7 @@ def rotate(pdf_file, angle=90):
     writer = PdfWriter()
 
     for page in reader.pages:
-        page.rotate(angle)
+        page.rotate_clockwise(angle)
         writer.add_page(page)
 
     output_stream = BytesIO()
@@ -74,6 +74,21 @@ def merge(pdf_file, secondpdf):
     output_file.seek(0)
     return output_file
 
+def encryption(pdf_file, password):
+    reader = PdfReader(pdf_file)
+    writer = PdfWriter()
+
+    for page in reader.pages:
+        writer.add_page(page)
+    
+    writer.encrypt(password)
+
+    output_pdf = BytesIO()
+    writer.write(output_pdf)
+    output_pdf.seek(0)
+
+    return output_pdf
+
 
 
 def home(request):
@@ -111,9 +126,23 @@ def home(request):
         elif mode == "merge":
             secondpdf = request.FILES.get("secondpdf")
 
+            if not secondpdf:
+                return HttpResponse("Second PDF is not provided")
             merge_pdf = merge(pdf_file, secondpdf)
             response = HttpResponse(merge_pdf, content_type="application/pdf")
             response["Content-Disposition"] = 'attachment; filename="merged.pdf"'
+            return response
+        
+        elif mode == "encrypt":
+            password = request.POST.get("password")
+
+            if not password:
+                return HttpResponse("Plese Enter the Password")
+
+            encrypted_pdf = encryption(pdf_file, password)
+
+            response = HttpResponse(encrypted_pdf, content_type="application/pdf")
+            response["Content-Disposition"] = 'attachment; filename="encrypted.pdf"'
             return response
 
         else:
