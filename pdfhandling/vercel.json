@@ -8,11 +8,12 @@
         "maxLambdaSize": "15mb",
         "runtime": "python3.9"
       }
-    }],
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "pdfhandling/wsgi.py"
+      "dest": "pdfhandling/wsgi.application"
     }
   ]
 }
