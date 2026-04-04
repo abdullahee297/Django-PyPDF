@@ -24,7 +24,7 @@ def rotate(pdf_file, angle=90):
     writer = PdfWriter()
 
     for page in reader.pages:
-        page.rotate_clockwise(angle)
+        page.rotate(angle)
         writer.add_page(page)
 
     output_stream = BytesIO()
